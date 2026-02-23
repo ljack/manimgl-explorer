@@ -2,7 +2,7 @@
 
 Browse annotated source code from [3Blue1Brown](https://www.3blue1brown.com/)'s animation library ([ManimGL](https://github.com/3b1b/manim)).
 
-**[Live Demo →](#)** *(coming soon)*
+**[Live Demo →](https://ljack.github.io/manimgl-explorer/)**
 
 ## What's inside
 
