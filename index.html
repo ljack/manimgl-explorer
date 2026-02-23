@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ManimGL Explorer — 3b1b Animation Code</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Top Bar -->
+  <header class="topbar">
+    <div class="topbar-left">
+      <div class="logo">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <circle cx="12" cy="12" r="10" stroke="#3b82f6" stroke-width="2"/>
+          <path d="M8 8 L16 12 L8 16 Z" fill="#3b82f6"/>
+        </svg>
+        <span class="logo-text">ManimGL Explorer</span>
+        <span class="logo-badge">3b1b</span>
+      </div>
+    </div>
+    <div class="topbar-center">
+      <div class="search-bar" id="searchBar">
+        <svg class="search-icon" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+          <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+        </svg>
+        <input type="text" id="searchInput" placeholder="Search scenes, functions, classes..." autocomplete="off">
+      </div>
+    </div>
+    <div class="topbar-right">
+      <button class="btn-icon" id="toggleChat" title="Toggle AI Assistant">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <main class="app">
+    <!-- File Tree -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <span class="sidebar-title">Files</span>
+      </div>
+      <nav class="file-tree" id="fileTree"></nav>
+    </aside>
+
+    <!-- Code Viewer -->
+    <section class="code-panel" id="codePanel">
+      <!-- Welcome screen -->
+      <div class="welcome" id="welcome">
+        <div class="welcome-content">
+          <div class="welcome-icon">
+            <svg width="64" height="64" viewBox="0 0 24 24" fill="none">
+              <circle cx="12" cy="12" r="10" stroke="#3b82f6" stroke-width="1.5" opacity="0.5"/>
+              <path d="M8 8 L16 12 L8 16 Z" fill="#3b82f6" opacity="0.7"/>
+            </svg>
+          </div>
+          <h1>ManimGL Explorer</h1>
+          <p class="welcome-subtitle">Annotated source code from 3Blue1Brown's animation library</p>
+          <div class="welcome-stats">
+            <div class="stat"><span class="stat-num">16</span><span class="stat-label">Projects</span></div>
+            <div class="stat"><span class="stat-num">59</span><span class="stat-label">Files</span></div>
+            <div class="stat"><span class="stat-num">890</span><span class="stat-label">Scenes</span></div>
+            <div class="stat"><span class="stat-num">2024-26</span><span class="stat-label">Years</span></div>
+          </div>
+          <p class="welcome-hint">Select a file from the sidebar to explore the code</p>
+        </div>
+      </div>
+
+      <!-- Code view (hidden initially) -->
+      <div class="code-view" id="codeView" style="display:none">
+        <div class="code-header">
+          <div class="code-breadcrumb" id="codeBreadcrumb"></div>
+          <div class="code-actions">
+            <button class="btn-small" id="btnAnnotations" title="Toggle annotations">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
+              </svg>
+              Annotations
+            </button>
+          </div>
+        </div>
+        <div class="code-description" id="codeDescription"></div>
+        <div class="code-body" id="codeBody"></div>
+      </div>
+    </section>
+
+    <!-- AI Chat Panel -->
+    <aside class="chat-panel" id="chatPanel">
+      <div class="chat-header">
+        <span class="chat-title">AI Assistant</span>
+        <div class="chat-api-key">
+          <input type="password" id="apiKeyInput" placeholder="Anthropic API key" autocomplete="off">
+        </div>
+      </div>
+      <div class="chat-messages" id="chatMessages">
+        <div class="chat-welcome">
+          <p>Ask questions about the code you're viewing. The AI will have context about the current file and ManimGL architecture.</p>
+          <div class="chat-suggestions" id="chatSuggestions">
+            <button class="suggestion" data-q="How does the animation pipeline work in ManimGL?">How does the animation pipeline work?</button>
+            <button class="suggestion" data-q="Explain the stereographic projection math in this code">Explain the stereographic projection math</button>
+            <button class="suggestion" data-q="What does self.play() do under the hood?">What does self.play() do?</button>
+          </div>
+        </div>
+      </div>
+      <div class="chat-input-area">
+        <textarea id="chatInput" placeholder="Ask about this code..." rows="1"></textarea>
+        <button class="btn-send" id="btnSend">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+          </svg>
+        </button>
+      </div>
+    </aside>
+  </main>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
